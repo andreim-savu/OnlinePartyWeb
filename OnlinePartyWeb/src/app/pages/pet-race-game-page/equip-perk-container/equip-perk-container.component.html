@@ -1,0 +1,4 @@
+<div class="perk-slot">
+    <img *ngIf="equippedPerk" [ngClass]="{'common': equippedPerk.rarity === 'Common', 'rare':  equippedPerk.rarity === 'Rare', 'epic':  equippedPerk.rarity === 'Epic', 'legendary':  equippedPerk.rarity === 'Legendary'}"
+        src="assets/PetRace/perk{{equippedPerk.id}}.png">
+</div>

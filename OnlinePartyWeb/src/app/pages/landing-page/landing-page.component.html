@@ -1,0 +1,11 @@
+<div class="form-wrapper">
+    <div class="label-input">
+        <div class="label">Username</div>
+        <input type="text" #username>
+    </div>
+    <div class="label-input">
+        <div class="label">Code</div>
+        <input type="text" #roomCode>
+    </div>
+    <button (click)="joinRoom(username, roomCode)">Play</button>
+</div>

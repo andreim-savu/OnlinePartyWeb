@@ -1,0 +1,67 @@
+<div class="page-wrapper">
+    <div class="header">Pet Race</div>
+    <div *ngIf="roomLoaded" class="content">
+        <div class="player-name">{{playerData.name}}</div>
+        <div *ngIf="state === 'Lobby'">
+            <div *ngIf="!playerData.pet" class="pets-container">
+                <app-pet-container *ngFor="let pet of mockPets" [petData]="pet" [selected]="pet === highlightedPet"
+                    (click)="highlightPet(pet)"></app-pet-container>
+            </div>
+        </div>
+        <div *ngIf="state === 'Loadout'">
+            <div *ngIf="playerData.perkSelectionPerks.length > 0" class="perks-container">
+                <app-perk-container *ngFor="let perk of playerData.perkSelectionPerks" [perkData]="perk"
+                    [selected]="perk === highlightedPerk" (click)="highlightPerk(perk)"></app-perk-container>
+            </div>
+            <div *ngIf="playerData.perkSelectionPerks.length === 0" class="loadout">
+                <div class="perk-slots">
+                    <app-equip-perk-container [equippedPerk]="playerData.pet!.perks[0]"
+                        (click)="selectPerk(playerData.pet!.perks[0])"></app-equip-perk-container>
+                    <app-equip-perk-container [equippedPerk]="playerData.pet!.perks[1]"
+                        (click)="selectPerk(playerData.pet!.perks[1])"></app-equip-perk-container>
+                    <app-equip-perk-container [equippedPerk]="playerData.pet!.perks[2]"
+                        (click)="selectPerk(playerData.pet!.perks[2])"></app-equip-perk-container>
+                    <app-equip-perk-container [equippedPerk]="playerData.pet!.perks[3]"
+                        (click)="selectPerk(playerData.pet!.perks[3])"></app-equip-perk-container>
+                    <app-equip-perk-container [equippedPerk]="playerData.pet!.perks[4]"
+                        (click)="selectPerk(playerData.pet!.perks[4])"></app-equip-perk-container>
+                </div>
+                <div class="perk-inventory">
+                    <div class="inventory-perks">
+                        <div *ngFor="let perk of playerData.inventoryPerks" class="inventory-perk-wrapper"
+                            (click)="selectPerk(perk)">
+                            <img class="inventory-perk"
+                                [ngClass]="{'common': perk.rarity === 'Common', 'rare':  perk.rarity === 'Rare', 'epic':  perk.rarity === 'Epic', 'legendary':  perk.rarity === 'Legendary'}"
+                                src="assets/PetRace/perk{{perk.id}}.png">
+                        </div>
+                    </div>
+                    <div class="perk-description-container">
+                        <div *ngIf="selectedPerk"
+                            [ngClass]="{'common': selectedPerk.rarity === 'Common', 'rare':  selectedPerk.rarity === 'Rare', 'epic':  selectedPerk.rarity === 'Epic', 'legendary':  selectedPerk.rarity === 'Legendary'}"
+                            class="perk-icon">
+                            <img src="assets/PetRace/perk{{selectedPerk.id}}.png">
+                        </div>
+                        <div *ngIf="selectedPerk" class="perk-description">{{selectedPerk.description}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="state === 'Race'" class="perks-container">
+            <div>Race in progress</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="button-wrapper" *ngIf="state === 'Lobby'">
+            <button *ngIf="!this.playerData.pet" [ngClass]="{'disabled': isSelectPetDisabled()}"
+                (click)="petClick()">Select</button>
+        </div>
+        <div class="button-wrapper" *ngIf="state === 'Loadout'">
+            <button *ngIf="playerData.perkSelectionPerks.length > 0" [ngClass]="{'disabled': isSelectPerkDisabled()}"
+                (click)="perkClick()">Select</button>
+            <button *ngIf="playerData.perkSelectionPerks.length === 0"
+                [ngClass]="{'disabled': isLoadoutButtonDisabled()}"
+                (click)="loadoutButtonClick()">{{setLoadoutButtonText()}}</button>
+            <button *ngIf="playerData.perkSelectionPerks.length === 0" (click)="setReady(true)" [ngClass]="{'disabled': playerData.isReady}">Ready</button>
+        </div>
+    </div>
+</div>

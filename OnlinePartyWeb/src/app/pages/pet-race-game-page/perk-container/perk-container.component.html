@@ -1,0 +1,17 @@
+<div class="perk-container" [ngClass]="{'selected': selected}">
+    <div class="perk-icon-wrapper">
+        <div class="perk-icon"
+            [ngClass]="{'common': perkData.rarity === 'Common', 'rare':  perkData.rarity === 'Rare', 'epic':  perkData.rarity === 'Epic', 'legendary':  perkData.rarity === 'Legendary'}">
+            <img class="perk-icon-image" src="assets/PetRace/perk{{perkData.id}}.png">
+            <div class="perk-stars-container">
+                <div *ngFor="let n of stars" class="perk-star-container">
+                    <img src="assets/PetRace/star.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="description-side">
+        <div class="perk-name">{{perkData.name}}</div>
+        <div class="perk-description">{{perkData.description}}</div>
+    </div>
+</div>

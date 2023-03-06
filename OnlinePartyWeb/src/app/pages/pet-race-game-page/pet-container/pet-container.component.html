@@ -1,0 +1,34 @@
+<div class="pet-container" [ngClass]="{'selected': selected}">
+    <div class="pet-icon-wrapper">
+        <div class="pet-icon"></div>
+    </div>
+    <div class="pet-description">
+        <div class="pet-name">Base Stats</div>
+        <div class="pet-stats">
+            <div class="pet-stat">
+                <div class="pet-stat-text">AGI</div>
+                <div class="pet-stat-value">{{petData.agility}}</div>
+            </div>
+            <div class="pet-stat">
+                <div class="pet-stat-text">STR</div>
+                <div class="pet-stat-value">{{petData.strength}}</div>
+            </div>
+            <div class="pet-stat">
+                <div class="pet-stat-text">INT</div>
+                <div class="pet-stat-value">{{petData.intelligence}}</div>
+            </div>
+            <div class="pet-stat">
+                <div class="pet-stat-text">CON</div>
+                <div class="pet-stat-value">{{petData.constitution}}</div>
+            </div>
+            <div class="pet-stat">
+                <div class="pet-stat-text">END</div>
+                <div class="pet-stat-value">{{petData.endurance}}</div>
+            </div>
+            <div class="pet-stat">
+                <div class="pet-stat-text">DEX</div>
+                <div class="pet-stat-value">{{petData.dexterity}}</div>
+            </div>
+        </div>
+    </div>
+</div>

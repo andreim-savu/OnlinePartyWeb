@@ -1,0 +1,58 @@
+$main: #4DB4D7;
+$selected: #0076BE;
+
+.pet-container {
+    display: flex;
+    height: 100px;
+    margin-block: 30px;
+    width: 330px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: $main;
+    transition: all 0.25s ease-in-out;
+
+    .pet-icon-wrapper {
+        display: flex;
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+
+        .pet-icon {
+            height: 64px;
+            width: 64px;
+            background-color: white;
+            border-radius: 50%;
+        }
+    }
+
+    .pet-description {
+        padding-top: 3px;
+        padding-right: 5px;
+
+        .pet-name {
+            font-size: 24px;
+            text-decoration: underline;
+            margin-bottom: 3px;
+        }
+        .pet-stats {
+            display: flex;
+            flex-wrap: wrap;
+
+            .pet-stat {
+                width: 50%;
+                padding-right: 10px;
+                display: flex;
+                justify-content: space-between;
+
+                .pet-stat-text {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    &.selected {
+        background-color: $selected;
+    }
+}

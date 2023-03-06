@@ -1,0 +1,74 @@
+<div class="header">Mafia</div>
+<div *ngIf="roomData && currentPlayer && currentPlayer.alive" class="page-container">
+    <div class="player-name">{{currentPlayer.username}}</div>
+    <div *ngIf="currentPlayer.role">Role: {{currentPlayer.role}}</div>
+    <div *ngIf="roomData._state === 'Lobby'">
+        <button *ngIf="currentPlayer && currentPlayer.host" (click)="startGame()">Start</button>
+    </div>
+    <div *ngIf="roomData._state === 'Mafia' && currentPlayer.role ==='Mafia'" class="role-action-container">
+        <div class="other-mafia">
+            <div *ngFor="let player of roomData._players">
+                <div *ngIf="player.role === 'Mafia' && player.id !== currentPlayer.id" class="target-container">{{player.username}}</div>
+            </div>
+        </div>
+        <div *ngIf="!currentPlayer.targetLocked" class="role-action-title">Select Target</div>
+        <div *ngIf="!currentPlayer.targetLocked" class="targets-container">
+            <div *ngFor="let player of roomData._players">
+                <div *ngIf="player.role !== 'Mafia' && player.alive" class="target-container" [ngClass]="{'selected': currentPlayer.targetId === player.id, 'other-mafia-selected': isOtherMafiaSelected(player)}" (click)="selectTarget(player)">{{player.username}}</div>
+            </div>
+        </div>
+        <button *ngIf="!currentPlayer.targetLocked" (click)="lockTarget()">Select</button>
+        <div *ngIf="currentPlayer.targetLocked">You have voted to kill {{getTargetName()}}</div>
+    </div>
+    <div *ngIf="roomData._state === 'Cop' && currentPlayer.role ==='Cop'" class="role-action-container">
+        <div class="role-action-title">Select Target</div>
+        <div *ngIf="!currentPlayer.targetLocked" class="targets-container">
+            <div *ngFor="let player of roomData._players">
+                <div *ngIf="player.role !== 'Cop' && player.alive" class="target-container" [ngClass]="{'selected': currentPlayer.targetId === player.id}" (click)="selectTarget(player)">{{player.username}}</div>
+            </div>
+        </div>
+        <button *ngIf="!currentPlayer.targetLocked" (click)="lockTarget()">Select</button>
+        <div *ngIf="currentPlayer.targetLocked">{{getTargetName()}} {{isTargetMafia() ? "IS" : "IS NOT"}} part of the Mafia.</div>
+    </div>
+    <div *ngIf="roomData._state === 'Medic' && currentPlayer.role ==='Medic'" class="role-action-container">
+        <div *ngIf="!currentPlayer.targetLocked" class="role-action-title">Select Target</div>
+        <div *ngIf="!currentPlayer.targetLocked" class="targets-container">
+            <div *ngFor="let player of roomData._players">
+                <div *ngIf="player.id !== currentPlayer.lastTargetId && player.alive" class="target-container" [ngClass]="{'selected': currentPlayer.targetId === player.id}" (click)="selectTarget(player)">{{player.username}}</div>
+            </div>
+        </div>
+        <button *ngIf="!currentPlayer.targetLocked" (click)="lockTarget()">Select</button>
+        <div *ngIf="currentPlayer.targetLocked">You have protected {{getTargetName()}}</div>
+    </div>
+    <div *ngIf="roomData._state === 'Day'" class="role-action-container">
+        <div>Wait</div>
+    </div>
+    <div *ngIf="roomData._state === 'Vote'" class="role-action-container">
+        <div *ngIf="!currentPlayer.targetLocked" class="role-action-title">Select Target</div>
+        <div *ngIf="!currentPlayer.targetLocked" class="targets-container">
+            <div *ngFor="let player of roomData._players">
+                <div *ngIf="player.id !== currentPlayer.id && player.alive" class="target-container" [ngClass]="{'selected': currentPlayer.targetId === player.id}" (click)="selectTarget(player)">{{player.username}}</div>
+            </div>
+        </div>
+        <button *ngIf="!currentPlayer.targetLocked" (click)="lockTarget()">Select</button>
+        <div *ngIf="currentPlayer.targetLocked">You have voted to kill {{getTargetName()}}</div>
+    </div>
+    <div *ngIf="roomData._state === 'TownWin'">
+        <div>The town has won!!!</div>
+    </div>
+    <div *ngIf="roomData._state === 'MafiaWin'">
+        <div>Mafia won :(</div>
+    </div>
+</div>
+
+<div *ngIf="roomData && currentPlayer && !currentPlayer.alive" class="page-container">
+    <div class="player-name">{{currentPlayer.username}}</div>
+    <div *ngIf="currentPlayer.role">Role: {{currentPlayer.role}}</div>
+    <div>Dead</div>
+    <div *ngIf="roomData._state === 'TownWin'">
+        <div>The town has won!!!</div>
+    </div>
+    <div *ngIf="roomData._state === 'MafiaWin'">
+        <div>Mafia won :(</div>
+    </div>
+</div>

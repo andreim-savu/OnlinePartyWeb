@@ -1,0 +1,68 @@
+.header {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary);
+    font-size: 38px;
+    -webkit-text-stroke: 1px black;
+}
+
+.page-container {
+    text-align: center;
+    margin-top: 20px;
+
+    .player-name {
+        font-size: 32px;
+    }
+
+    .role-action-container {
+        margin-top: 20px;
+
+        .role-action-title {
+            font-size: 28px;
+            text-decoration: underline;
+            margin-bottom: 15px;
+        }
+    }
+
+
+    .targets-container {
+        .target-container {
+            height: 40px;
+            width: 200px;
+            margin-block: 10px;
+            margin-inline: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--secondary);
+            border-radius: 5px;
+
+            &.other-mafia-selected {
+                color: red;
+            }
+
+            &.selected {
+                background-color: var(--secondary);
+            }
+        }
+    }
+    button {
+        margin-top: 15px;
+    }
+}
+
+button {
+    font-size: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: var(--accents);
+    border: 1px solid var(--accents);
+    box-shadow: 0 0 5px 0 var(--accents);
+    color: white;
+    border-radius: 10px;
+    padding: 10px 55px;
+    text-align: center;
+    cursor: pointer;
+}
