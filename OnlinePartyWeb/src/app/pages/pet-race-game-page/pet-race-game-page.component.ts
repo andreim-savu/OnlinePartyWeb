@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,8 @@ import { IPetRaceRoom } from './interfaces/ipet-race-room';
 @Component({
   selector: 'app-pet-race-game-page',
   templateUrl: './pet-race-game-page.component.html',
-  styleUrls: ['./pet-race-game-page.component.scss']
+  styleUrls: ['./pet-race-game-page.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PetRaceGamePageComponent implements OnInit {
 
@@ -36,6 +37,8 @@ export class PetRaceGamePageComponent implements OnInit {
 
   playerId: string = "";
 
+  descriptionPerkLevels: number[] = [];
+
   constructor(private db: AngularFireDatabase, private router: Router) { }
 
   ngOnInit(): void {
@@ -51,13 +54,11 @@ export class PetRaceGamePageComponent implements OnInit {
     let statsRemaining = 15;
     for (let pet of this.mockPets) {
       for (let i = 0; i < statsRemaining; i++) {
-        let randomStat = Math.floor(Math.random() * 6);
-        if (randomStat === 0) { pet.agility++; }
-        else if (randomStat === 1) { pet.strength++; }
-        else if (randomStat === 2) { pet.intelligence++; }
-        else if (randomStat === 3) { pet.constitution++; }
-        else if (randomStat === 4) { pet.endurance++; }
-        else if (randomStat === 5) { pet.dexterity++; }
+        let randomStat = Math.floor(Math.random() * 4);
+        if (randomStat === 0) { pet.movementSpeed += 0.1; }
+        else if (randomStat === 1) { pet.dodge++; }
+        else if (randomStat === 2) { pet.regen++; }
+        else if (randomStat === 3) { pet.depletion++; }
       }
     }
   }
@@ -76,27 +77,6 @@ export class PetRaceGamePageComponent implements OnInit {
   }
 
   async getData() {
-    // let room = this.db.object('rooms/' + this.roomCode);
-    // this.roomSubscription = room.snapshotChanges().subscribe(data => {
-    //   console.log("Data changed");
-    //   let roomData = data.payload.val() as IPetRaceRoom;
-    //   for (let player of roomData._players) {
-    //     console.log(player);
-    //     if (player.id === playerId) {
-    //       this.playerIndex = roomData._players.indexOf(player);
-    //       this.playerData = player as IPetRacePlayer;
-    //       this.playerData.inventoryPerks = player.inventoryPerks ? player.inventoryPerks : [];
-    //       this.playerData.perkSelectionPerks = player.perkSelectionPerks ? player.perkSelectionPerks : [];
-    //       this.roomLoaded = true;
-    //       this.state = roomData._state;
-    //       if (this.playerData.pet) {
-    //         this.playerData.pet.perks = player.pet?.perks ? player.pet?.perks : [];
-    //       }
-    //       break;
-    //     }
-    //   }
-    // });
-
     let data = (await this.db.object("rooms/" + this.roomCode).query.get()).val();
     let roomData = data as IPetRaceRoom;
 
@@ -186,6 +166,7 @@ export class PetRaceGamePageComponent implements OnInit {
 
   selectPerk(perk: IPetRacePerk): void {
     this.selectedPerk = perk;
+    this.descriptionPerkLevels = Array(this.selectedPerk.level).fill(0).map((x,i)=>i);
   }
 
   petClick() {
@@ -262,6 +243,7 @@ export class PetRaceGamePageComponent implements OnInit {
   }
 
   updatePlayer() {
+    console.log(123);
     this.db.object(`rooms/${this.roomCode}/_players/${this.playerIndex}`).set(this.playerData);
   }
 
@@ -270,34 +252,31 @@ export class PetRaceGamePageComponent implements OnInit {
       id: "1",
       name: "Mitzi",
       perks: [],
-      agility: 9,
-      strength: 9,
-      intelligence: 9,
-      constitution: 9,
-      endurance: 9,
-      dexterity: 9
+      movementSpeed: 2.5,
+      dodge: 10,
+      regen: 15,
+      depletion: 40,
+      modelNo: Math.floor(Math.random() * 6)
     },
     {
       id: "2",
       name: "Mac",
       perks: [],
-      agility: 9,
-      strength: 9,
-      intelligence: 9,
-      constitution: 9,
-      endurance: 9,
-      dexterity: 9
+      movementSpeed: 2.5,
+      dodge: 10,
+      regen: 15,
+      depletion: 40,
+      modelNo: Math.floor(Math.random() * 6)
     },
     {
       id: "3",
       name: "Motanitorul",
       perks: [],
-      agility: 9,
-      strength: 9,
-      intelligence: 9,
-      constitution: 9,
-      endurance: 9,
-      dexterity: 9
+      movementSpeed: 2.5,
+      dodge: 10,
+      regen: 15,
+      depletion: 40,
+      modelNo: Math.floor(Math.random() * 6)
     }
   ];
 }

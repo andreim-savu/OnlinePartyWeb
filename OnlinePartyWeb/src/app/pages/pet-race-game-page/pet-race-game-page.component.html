@@ -36,12 +36,14 @@
                         </div>
                     </div>
                     <div class="perk-description-container">
-                        <div *ngIf="selectedPerk"
-                            [ngClass]="{'common': selectedPerk.rarity === 'Common', 'rare':  selectedPerk.rarity === 'Rare', 'epic':  selectedPerk.rarity === 'Epic', 'legendary':  selectedPerk.rarity === 'Legendary'}"
-                            class="perk-icon">
-                            <img src="assets/PetRace/perk{{selectedPerk.id}}.png">
+                        <div *ngIf="selectedPerk" class="perk-icon-wrapper" [ngClass]="{'common': selectedPerk.rarity === 'Common', 'rare':  selectedPerk.rarity === 'Rare', 'epic':  selectedPerk.rarity === 'Epic', 'legendary':  selectedPerk.rarity === 'Legendary'}">
+                            <div class="perk-level-wrapper">
+                                <div *ngFor="let n of descriptionPerkLevels" class="perk-level"></div>
+                            </div>
+                            <img class="perk-icon" src="assets/PetRace/perk{{selectedPerk.id}}.png">
                         </div>
-                        <div *ngIf="selectedPerk" class="perk-description">{{selectedPerk.description}}</div>
+                        <div *ngIf="selectedPerk" class="perk-description-wrapper" [innerHTML]="selectedPerk.description | petRacePerkDescription:selectedPerk.level">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,7 +63,9 @@
             <button *ngIf="playerData.perkSelectionPerks.length === 0"
                 [ngClass]="{'disabled': isLoadoutButtonDisabled()}"
                 (click)="loadoutButtonClick()">{{setLoadoutButtonText()}}</button>
-            <button *ngIf="playerData.perkSelectionPerks.length === 0" (click)="setReady(true)" [ngClass]="{'disabled': playerData.isReady}">Ready</button>
+            <button *ngIf="playerData.perkSelectionPerks.length === 0" (click)="setReady(true)"
+                [ngClass]="{'disabled': playerData.isReady}">Ready</button>
         </div>
     </div>
 </div>
+<!-- Music by <a href="https://pixabay.com/users/saavane-32312792/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=139641">saavane</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=139641">Pixabay</a> -->

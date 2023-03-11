@@ -114,43 +114,119 @@ $extra: #0076BE;
                     height: 80px;
                     border-top: 1px solid black;
 
-                    .perk-icon {
-                        align-self: center;
-                        flex-shrink: 0;
-                        height: 48px;
-                        width: 48px;
-                        border-radius: 50%;
-                        border: 1px solid;
+                    .perk-icon-wrapper {
+                        display: flex;
+                        padding-block: 5px;
                         
-                        margin-right: 10px;
-
-                        img {
-                            width: 100%;
-                            height: 100%;
+                        .perk-icon {
+                            flex-shrink: 0;
+                            height: 48px;
+                            width: 48px;
                             border-radius: 50%;
+                            border: 1px solid;
+                            align-self: center;
+                            
+                            margin-right: 10px;
+    
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 50%;
+                            }
                         }
 
+                        .perk-level-wrapper {
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-content: flex-end;
+                            width: 10px;
+                            height: 100%;
+                            border-radius: 20px;
+                            background-color: white;
+                            overflow: hidden;
+                            padding: 2px;
+                            margin-right: 5px;
+                
+                            .perk-level {
+                                border-top: 1px solid white;
+                                height: 20%;
+                                width: 100%;
+                                border-radius: 10px;
+                            }
+                        }
                         &.common {
-                            box-shadow: 0 0px 5px 2px green;
+                            .perk-level-wrapper {
+                                outline: 2px solid green;
+                                .perk-level {
+                                    background-color: green;
+                                }
+                            }
+                
+                            .perk-icon {
+                                border: 3px solid green;
+                            }
+                
                         }
-            
+                
                         &.rare {
-                            box-shadow: 0 0px 5px 2px blue;
+                            .perk-level-wrapper {
+                                outline: 2px solid blue;
+                                .perk-level {
+                                    background-color: blue;
+                                }
+                            }
+                
+                            .perk-icon {
+                                border: 3px solid blue;
+                            }
+                
                         }
-            
+                
                         &.epic {
-                            box-shadow: 0 0px 5px 2px purple;
+                            .perk-level-wrapper {
+                                outline: 2px solid purple;
+                                .perk-level {
+                                    background-color: purple;
+                                }
+                            }
+                
+                            .perk-icon {
+                                border: 3px solid purple;
+                            }
+                
                         }
-            
+                
                         &.legendary {
-                            box-shadow: 0 0px 5px 2px red;
+                            .perk-level-wrapper {
+                                outline: 2px solid red;
+                                .perk-level {
+                                    background-color: red;
+                                }
+                            }
+                
+                            .perk-icon {
+                                border: 3px solid red;
+                            }
+                
                         }
                     }
-
-                    .perk-description {
+                    .perk-description-wrapper {
                         overflow: auto;
                         -ms-overflow-style: none;  /* IE and Edge */
                         scrollbar-width: none;  /* Firefox */
+                        .perk-description {
+
+                            .perk-description-stats {
+                                color: grey;
+                                font-size: 14px;
+                            
+                                .perk-description-highlighted-stat {
+                                    color: white;
+                                    font-weight: bold;
+                                    font-size: 16px;
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -3,31 +3,36 @@ $selected: #0076BE;
 
 .pet-container {
     display: flex;
-    height: 100px;
     margin-block: 30px;
     width: 330px;
     border: 1px solid black;
     border-radius: 10px;
     background-color: $main;
     transition: all 0.25s ease-in-out;
+    padding-block: 10px;
 
     .pet-icon-wrapper {
         display: flex;
         flex-shrink: 0;
         justify-content: center;
         align-items: center;
-        width: 100px;
+        width: 80px;
 
         .pet-icon {
-            height: 64px;
-            width: 64px;
+            height: 56px;
+            width: 56px;
             background-color: white;
             border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
         }
     }
 
     .pet-description {
-        padding-top: 3px;
         padding-right: 5px;
 
         .pet-name {
@@ -40,6 +45,7 @@ $selected: #0076BE;
             flex-wrap: wrap;
 
             .pet-stat {
+                margin-bottom: 3px;
                 width: 50%;
                 padding-right: 10px;
                 display: flex;

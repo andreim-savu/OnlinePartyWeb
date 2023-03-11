@@ -15,6 +15,7 @@ import { PetRaceGamePageComponent } from './pages/pet-race-game-page/pet-race-ga
 import { PetContainerComponent } from './pages/pet-race-game-page/pet-container/pet-container.component';
 import { PerkContainerComponent } from './pages/pet-race-game-page/perk-container/perk-container.component';
 import { EquipPerkContainerComponent } from './pages/pet-race-game-page/equip-perk-container/equip-perk-container.component';
+import { PetRacePerkDescriptionPipe } from './pipes/pet-race-perk-description.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EquipPerkContainerComponent } from './pages/pet-race-game-page/equip-pe
     PetRaceGamePageComponent,
     PetContainerComponent,
     PerkContainerComponent,
-    EquipPerkContainerComponent
+    EquipPerkContainerComponent,
+    PetRacePerkDescriptionPipe
   ],
   imports: [
     BrowserModule,

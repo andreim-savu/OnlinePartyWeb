@@ -1,33 +1,27 @@
 <div class="pet-container" [ngClass]="{'selected': selected}">
     <div class="pet-icon-wrapper">
-        <div class="pet-icon"></div>
+        <div class="pet-icon">
+            <img src="assets/PetRace/pet{{petData.modelNo}}.png">
+        </div>
     </div>
     <div class="pet-description">
         <div class="pet-name">Base Stats</div>
         <div class="pet-stats">
             <div class="pet-stat">
-                <div class="pet-stat-text">AGI</div>
-                <div class="pet-stat-value">{{petData.agility}}</div>
+                <div class="pet-stat-text">Speed</div>
+                <div class="pet-stat-value">{{petData.movementSpeed | number}}m/s</div>
             </div>
             <div class="pet-stat">
-                <div class="pet-stat-text">STR</div>
-                <div class="pet-stat-value">{{petData.strength}}</div>
+                <div class="pet-stat-text">Dodge</div>
+                <div class="pet-stat-value">{{petData.dodge | number}}%</div>
             </div>
             <div class="pet-stat">
-                <div class="pet-stat-text">INT</div>
-                <div class="pet-stat-value">{{petData.intelligence}}</div>
+                <div class="pet-stat-text">Regen</div>
+                <div class="pet-stat-value">{{petData.regen | number}}/s</div>
             </div>
             <div class="pet-stat">
-                <div class="pet-stat-text">CON</div>
-                <div class="pet-stat-value">{{petData.constitution}}</div>
-            </div>
-            <div class="pet-stat">
-                <div class="pet-stat-text">END</div>
-                <div class="pet-stat-value">{{petData.endurance}}</div>
-            </div>
-            <div class="pet-stat">
-                <div class="pet-stat-text">DEX</div>
-                <div class="pet-stat-value">{{petData.dexterity}}</div>
+                <div class="pet-stat-text">Depletion</div>
+                <div class="pet-stat-value">{{petData.depletion | number}}/s</div>
             </div>
         </div>
     </div>
