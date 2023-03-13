@@ -17,7 +17,7 @@ export class PerkContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.levels = Array(this.perkData.level).fill(0).map((x,i)=>i);
+    this.levels = Array(this.perkData.level! + 1).fill(0).map((x,i)=>i);
   }
 
 }

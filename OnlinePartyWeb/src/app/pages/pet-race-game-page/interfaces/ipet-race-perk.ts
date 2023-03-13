@@ -3,5 +3,6 @@ export interface IPetRacePerk {
     name: string;
     description: string;
     rarity: string;
-    level: number;
+    level?: number;
+    frozen?: boolean;
 }
