@@ -6,7 +6,10 @@ export interface IPetRacePlayer {
     name: string;
     pet?: IPet;
     inventoryPerks: IPetRacePerk[];
-    perkSelectionPerks: IPetRacePerk[];
+    perkSelectionPerks: string;
     isReady: boolean;
+    coins: number;
+    freeRerolls: number;
+    score: number;
     host: boolean;
 }

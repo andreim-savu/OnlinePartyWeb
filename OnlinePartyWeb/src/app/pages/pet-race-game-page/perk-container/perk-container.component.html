@@ -1,5 +1,6 @@
-<div class="perk-container" [ngClass]="{'selected': selected}">
-    <div class="perk-icon-wrapper" [ngClass]="{'common': perkData.rarity === 'Common', 'rare':  perkData.rarity === 'Rare', 'epic':  perkData.rarity === 'Epic', 'legendary':  perkData.rarity === 'Legendary'}">
+<div class="perk-container" [ngClass]="{'selected': selected, 'frozen': perkData.frozen}">
+    <div class="perk-icon-wrapper"
+        [ngClass]="{'common': perkData.rarity === 'Common', 'rare':  perkData.rarity === 'Rare', 'epic':  perkData.rarity === 'Epic', 'legendary':  perkData.rarity === 'Legendary'}">
         <div class="perk-level-wrapper">
             <div *ngFor="let n of levels" class="perk-level"></div>
         </div>
@@ -8,7 +9,10 @@
         </div>
     </div>
     <div class="description-side">
-        <div class="perk-name">{{perkData.name}}</div>
-        <div [outerHTML]="perkData.description | petRacePerkDescription:perkData.level"></div>
+        <div class="perk-header">
+            <div class="perk-name">{{perkData.name}}</div>
+            <div class="perk-cost">4<img src="assets/PetRace/coin.svg"></div>
+        </div>
+        <div [innerHTML]="perkData.description | petRacePerkDescription:perkData.level! + 1"></div>
     </div>
 </div>

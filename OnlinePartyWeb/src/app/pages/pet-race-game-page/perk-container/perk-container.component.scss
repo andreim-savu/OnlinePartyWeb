@@ -1,10 +1,11 @@
 $main: #4DB4D7;
 $selected: #0076BE;
+$frozen: #c6d403;
 
 .perk-container {
     display: flex;
     height: 100px;
-    margin-block: 30px;
+    margin-bottom: 15px;
     width: 330px;
     border: 1px solid black;
     border-radius: 10px;
@@ -35,6 +36,19 @@ $selected: #0076BE;
                 height: 20%;
                 width: 100%;
                 border-radius: 10px;
+            }
+
+            .perk-level:first-child {
+                animation-name: level-breathe;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+                animation-timing-function: ease-in-out;
+            }
+
+            @keyframes level-breathe {
+              from {opacity: 1;}
+              to {opacity: 0;}
             }
         }
 
@@ -73,6 +87,7 @@ $selected: #0076BE;
         &.common {
             .perk-level-wrapper {
                 outline: 2px solid green;
+
                 .perk-level {
                     background-color: green;
                 }
@@ -87,6 +102,7 @@ $selected: #0076BE;
         &.rare {
             .perk-level-wrapper {
                 outline: 2px solid blue;
+
                 .perk-level {
                     background-color: blue;
                 }
@@ -101,6 +117,7 @@ $selected: #0076BE;
         &.epic {
             .perk-level-wrapper {
                 outline: 2px solid purple;
+
                 .perk-level {
                     background-color: purple;
                 }
@@ -115,6 +132,7 @@ $selected: #0076BE;
         &.legendary {
             .perk-level-wrapper {
                 outline: 2px solid red;
+
                 .perk-level {
                     background-color: red;
                 }
@@ -131,10 +149,25 @@ $selected: #0076BE;
         padding-block: 5px;
         overflow: auto;
 
-        .perk-name {
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: underline;
+        .perk-header {
+            display: flex;
+            justify-content: space-between;
+
+            .perk-name {
+                font-size: 20px;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+
+            .perk-cost {
+                display: flex;
+                margin-right: 15px;
+                img {
+                    margin-left: 5px;
+                    height: 24px;
+                    width: 20px;
+                }
+            }
         }
 
         .perk-description {
@@ -145,7 +178,7 @@ $selected: #0076BE;
             .perk-description-stats {
                 color: grey;
                 font-size: 14px;
-            
+
                 .perk-description-highlighted-stat {
                     color: white;
                     font-weight: bold;
@@ -157,5 +190,9 @@ $selected: #0076BE;
 
     &.selected {
         background-color: $selected;
+    }
+
+    &.frozen {
+        box-shadow: 0 0 2px 5px $frozen;
     }
 }

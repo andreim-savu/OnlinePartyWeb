@@ -6,4 +6,5 @@ export interface IPetRaceRoom extends IRoom {
     _gameName: string;
     _players: IPetRacePlayer[];
     _state: string;
+    _turnNo: number;
 }

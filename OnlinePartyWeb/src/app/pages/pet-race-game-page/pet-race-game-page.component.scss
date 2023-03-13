@@ -2,12 +2,15 @@ $main: #95D8EB;
 $main-gradient: #8BD9C7;
 $secondary: #48BF91;
 $extra: #0076BE;
+$background: #4DB4D7;
+
 
 .page-wrapper {
     display: flex;
     flex-direction: column;
     height: 100vh;
     max-height: -webkit-fill-available;
+    overflow: auto;
     background-color: $main;
 
     .header {
@@ -31,202 +34,327 @@ $extra: #0076BE;
         .player-name {
             font-size: 24px;
             text-decoration: underline;
+            margin-bottom: 15px;
         }
 
-        .loadout {
-            flex-grow: 1;
+        .loadout-wrapper {
             display: flex;
-            flex-direction: column;
+            width: 100%;
+            overflow: hidden;
+            justify-content: center;
+            
 
-            .perk-slots {
-                margin-block: 15px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding-inline: 15px;
-                flex-shrink: 0;
-                height: 70px;
-                width: 330px;
-                border: 1px solid black;
-                border-radius: 35px;
-            }
-
-            .perk-inventory {
-                display: flex;
-                flex-direction: column;
-                height: 300px;
-                width: 330px;
-                border: 1px solid black;
-                border-radius: 15px;
-
-                .inventory-perks {
-                    padding: 10px 15px;
+            .perks-container {
+                .currency-display {
+                    font-size: 24px;
                     display: flex;
-                    flex-wrap: wrap;
-                    align-content: flex-start;
-                    overflow: auto;
-                    -ms-overflow-style: none;  /* IE and Edge */
-                    scrollbar-width: none;  /* Firefox */
-                    flex-shrink: 1;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 15px;
+                    padding-inline: 15px;
 
-                    .inventory-perk-wrapper {
+                    .currency {
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            margin-right: 10px;
+                            width: 48px;
+                        }
+                    }
+
+                    button {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        width: 20%;
-                        height: 60px;
-                        flex-shrink: 0;
+                        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                        font-size: 24px;
+                        height: 50px;
+                        width: auto;
+                        background-color: $extra;
+                        border: none;
+                        box-shadow: 0 0 5px 1px $extra;
+                        border-radius: 5px;
+                        transition: all 0.25s ease-in-out;
+                        padding-inline: 15px;
 
-                        .inventory-perk {
-                            height: 48px;
-                            width: 48px;
-                            border-radius: 50%;
-                            border: 1px solid;
-                            background-color: white;
+                        .coin-img {
+                            width: 24px;
+                        }
+
+                        .reroll-img {
+                            width: 24px;
+                            margin-left: 10px;
+                        }
+        
+                        &.disabled {
+                            background-color: gray;
+                            box-shadow: 0 0 5px 1px gray;
+                        }
+                    }
+                }
+            }
+
+            .loadout-inventory {
+                display: flex;
+                flex-direction: column;
+
+                .perk-slots {
+                    margin-bottom: 15px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-inline: 15px;
+                    flex-shrink: 0;
+                    height: 70px;
+                    width: 330px;
+                    border: 1px solid black;
+                    border-radius: 35px;
+                    background-color: $background;
+                }
+
+                .perk-inventory {
+                    display: flex;
+                    flex-direction: column;
+                    height: 300px;
+                    width: 330px;
+                    border: 1px solid black;
+                    border-radius: 15px;
+                    background-color: $background;
+
+                    .inventory-perks {
+                        padding: 10px 15px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-content: flex-start;
+                        overflow: auto;
+                        -ms-overflow-style: none;
+                        /* IE and Edge */
+                        scrollbar-width: none;
+                        /* Firefox */
+                        flex-shrink: 1;
+
+                        .inventory-perk-wrapper {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 20%;
+                            height: 60px;
+                            flex-shrink: 0;
+
+                            .inventory-perk {
+                                height: 48px;
+                                width: 48px;
+                                border-radius: 50%;
+                                border: 1px solid;
+                                background-color: white;
+
+                                &.common {
+                                    box-shadow: 0 0px 5px 2px green;
+                                }
+
+                                &.rare {
+                                    box-shadow: 0 0px 5px 2px blue;
+                                }
+
+                                &.epic {
+                                    box-shadow: 0 0px 5px 2px purple;
+                                }
+
+                                &.legendary {
+                                    box-shadow: 0 0px 5px 2px red;
+                                }
+                            }
+                        }
+                    }
+
+                    .inventory-perks::-webkit-scrollbar {
+                        display: none;
+                    }
+
+                    .perk-description-container {
+                        display: flex;
+                        padding: 10px 15px;
+                        flex-shrink: 0;
+                        margin-top: auto;
+                        height: 80px;
+                        border-top: 1px solid black;
+
+                        .perk-icon-wrapper {
+                            display: flex;
+                            padding-block: 5px;
+
+                            .perk-icon {
+                                flex-shrink: 0;
+                                height: 48px;
+                                width: 48px;
+                                border-radius: 50%;
+                                border: 1px solid;
+                                align-self: center;
+
+                                margin-right: 10px;
+
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: 50%;
+                                }
+                            }
+
+                            .perk-level-wrapper {
+                                display: flex;
+                                flex-wrap: wrap;
+                                align-content: flex-end;
+                                width: 10px;
+                                height: 100%;
+                                border-radius: 20px;
+                                background-color: white;
+                                overflow: hidden;
+                                padding: 2px;
+                                margin-right: 5px;
+
+                                .perk-level {
+                                    border-top: 1px solid white;
+                                    height: 20%;
+                                    width: 100%;
+                                    border-radius: 10px;
+                                }
+                            }
 
                             &.common {
-                                box-shadow: 0 0px 5px 2px green;
+                                .perk-level-wrapper {
+                                    outline: 2px solid green;
+
+                                    .perk-level {
+                                        background-color: green;
+                                    }
+                                }
+
+                                .perk-icon {
+                                    border: 3px solid green;
+                                }
+
                             }
-                
+
                             &.rare {
-                                box-shadow: 0 0px 5px 2px blue;
+                                .perk-level-wrapper {
+                                    outline: 2px solid blue;
+
+                                    .perk-level {
+                                        background-color: blue;
+                                    }
+                                }
+
+                                .perk-icon {
+                                    border: 3px solid blue;
+                                }
+
                             }
-                
+
                             &.epic {
-                                box-shadow: 0 0px 5px 2px purple;
+                                .perk-level-wrapper {
+                                    outline: 2px solid purple;
+
+                                    .perk-level {
+                                        background-color: purple;
+                                    }
+                                }
+
+                                .perk-icon {
+                                    border: 3px solid purple;
+                                }
+
                             }
-                
+
                             &.legendary {
-                                box-shadow: 0 0px 5px 2px red;
+                                .perk-level-wrapper {
+                                    outline: 2px solid red;
+
+                                    .perk-level {
+                                        background-color: red;
+                                    }
+                                }
+
+                                .perk-icon {
+                                    border: 3px solid red;
+                                }
+
+                            }
+                        }
+
+                        .perk-description-wrapper {
+                            overflow: auto;
+                            -ms-overflow-style: none;
+                            /* IE and Edge */
+                            scrollbar-width: none;
+
+                            /* Firefox */
+                            .perk-description {
+
+                                .perk-description-stats {
+                                    color: grey;
+                                    font-size: 14px;
+
+                                    .perk-description-highlighted-stat {
+                                        color: white;
+                                        font-weight: bold;
+                                        font-size: 16px;
+                                    }
+                                }
                             }
                         }
                     }
                 }
-                .inventory-perks::-webkit-scrollbar {
-                    display: none;
-                  }
+            }
 
-                .perk-description-container {
-                    display: flex;
-                    padding: 10px 15px;
-                    flex-shrink: 0;
-                    margin-top: auto;
-                    height: 80px;
-                    border-top: 1px solid black;
+            .summary-container-wrapper {
+                .summary-container {
+                    width: 330px;
+                    background-color: $background;
+                    border: 1px solid black;
+                    border-radius: 10px;
+                    padding: 15px;
 
-                    .perk-icon-wrapper {
-                        display: flex;
-                        padding-block: 5px;
-                        
-                        .perk-icon {
-                            flex-shrink: 0;
-                            height: 48px;
-                            width: 48px;
-                            border-radius: 50%;
-                            border: 1px solid;
-                            align-self: center;
-                            
-                            margin-right: 10px;
-    
-                            img {
-                                width: 100%;
-                                height: 100%;
-                                border-radius: 50%;
-                            }
-                        }
+                    .turn {
+                        font-size: 24px;
+                        text-align: center;
+                        font-weight: bold;
+                        text-decoration: underline;
+                        margin-bottom: 15px;
+                    }
 
-                        .perk-level-wrapper {
-                            display: flex;
-                            flex-wrap: wrap;
-                            align-content: flex-end;
-                            width: 10px;
+                    .pet-icon-wrapper {
+                        height: 64px;
+                        width: 64px;
+                        margin-inline: auto;
+                        border-radius: 50%;
+                        overflow: hidden;
+
+                        img {
                             height: 100%;
-                            border-radius: 20px;
-                            background-color: white;
-                            overflow: hidden;
-                            padding: 2px;
-                            margin-right: 5px;
-                
-                            .perk-level {
-                                border-top: 1px solid white;
-                                height: 20%;
-                                width: 100%;
-                                border-radius: 10px;
-                            }
-                        }
-                        &.common {
-                            .perk-level-wrapper {
-                                outline: 2px solid green;
-                                .perk-level {
-                                    background-color: green;
-                                }
-                            }
-                
-                            .perk-icon {
-                                border: 3px solid green;
-                            }
-                
-                        }
-                
-                        &.rare {
-                            .perk-level-wrapper {
-                                outline: 2px solid blue;
-                                .perk-level {
-                                    background-color: blue;
-                                }
-                            }
-                
-                            .perk-icon {
-                                border: 3px solid blue;
-                            }
-                
-                        }
-                
-                        &.epic {
-                            .perk-level-wrapper {
-                                outline: 2px solid purple;
-                                .perk-level {
-                                    background-color: purple;
-                                }
-                            }
-                
-                            .perk-icon {
-                                border: 3px solid purple;
-                            }
-                
-                        }
-                
-                        &.legendary {
-                            .perk-level-wrapper {
-                                outline: 2px solid red;
-                                .perk-level {
-                                    background-color: red;
-                                }
-                            }
-                
-                            .perk-icon {
-                                border: 3px solid red;
-                            }
-                
+                            width: 100%;
                         }
                     }
-                    .perk-description-wrapper {
-                        overflow: auto;
-                        -ms-overflow-style: none;  /* IE and Edge */
-                        scrollbar-width: none;  /* Firefox */
-                        .perk-description {
 
-                            .perk-description-stats {
-                                color: grey;
-                                font-size: 14px;
-                            
-                                .perk-description-highlighted-stat {
-                                    color: white;
-                                    font-weight: bold;
-                                    font-size: 16px;
-                                }
-                            }
+                    .label-value {
+                        margin-bottom: 10px;
+                        display: flex;
+                        justify-content: space-between;
+                        .value {
+                            font-weight: bold;
                         }
+                    }
+
+                    .score {
+                        text-align: center;
+                        font-size: 24px;
+                        margin-bottom: 10px;
+                    }
+
+                    .subtitle {
+                        font-size: 24px;
+                        text-decoration: underline;
+                        margin-block: 10px;
                     }
                 }
             }
@@ -240,23 +368,32 @@ $extra: #0076BE;
         flex-shrink: 0;
         height: 80px;
         background-color: $secondary;
+        padding-inline: 15px;
 
         .button-wrapper {
             display: flex;
             justify-content: center;
             width: 100%;
-            
+
             button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
                 font-size: 24px;
                 height: 50px;
-                width: 150px;
+                width: 130px;
                 margin-inline: auto;
                 background-color: $extra;
                 border: none;
                 box-shadow: 0 0 5px 1px $extra;
                 border-radius: 5px;
                 transition: all 0.25s ease-in-out;
+                padding-inline: 15px;
+                img {
+                    width: 24px;
+                    margin-right: auto;
+                }
 
                 &.disabled {
                     background-color: gray;
@@ -264,5 +401,44 @@ $extra: #0076BE;
                 }
             }
         }
+
+        .nav-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            background-color: $extra;
+            box-shadow: 0 0 5px 1px $extra;
+            cursor: pointer;
+
+            img {
+                width: 30px;
+            }
+            
+            &.next-button {
+                margin-left: auto;
+
+                img {
+                    margin-left: 5px;
+                }
+            }
+
+            &.prev-button {
+                margin-right: auto;
+
+                img {
+                    margin-right: 5px;
+                    -webkit-transform: scaleX(-1);
+                    transform: scaleX(-1);
+                }
+            }
+        }
     }
+}
+
+.hide {
+    display: none !important;
 }

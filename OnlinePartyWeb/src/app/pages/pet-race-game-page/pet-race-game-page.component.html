@@ -8,12 +8,17 @@
                     (click)="highlightPet(pet)"></app-pet-container>
             </div>
         </div>
-        <div *ngIf="state === 'Loadout'">
-            <div *ngIf="playerData.perkSelectionPerks.length > 0" class="perks-container">
-                <app-perk-container *ngFor="let perk of playerData.perkSelectionPerks" [perkData]="perk"
+        <div *ngIf="state === 'Loadout' && !this.playerData.isReady" class="loadout-wrapper">
+            <div class="perks-container" [ngClass]="{'hide': loadoutPage !== 1}">
+                <div class="currency-display">
+                    <div class="currency"> <img src="assets/PetRace/coin.svg"><span>{{playerData.coins}}</span></div>
+                    <button *ngIf="playerData.freeRerolls <= 0" [ngClass]="{'disabled': playerData.coins <= 0}" (click)="reroll()"><span>1</span><img class="coin-img" src="assets/PetRace/coin.svg"><img class="reroll-img" src="assets/PetRace/reroll.svg"></button>
+                    <button *ngIf="playerData.freeRerolls > 0" (click)="reroll()"><span>{{playerData.freeRerolls}}x Free</span><img class="reroll-img" src="assets/PetRace/reroll.svg"></button>
+                </div>
+                <app-perk-container *ngFor="let perk of perksSelectionPerks" [perkData]="perk"
                     [selected]="perk === highlightedPerk" (click)="highlightPerk(perk)"></app-perk-container>
             </div>
-            <div *ngIf="playerData.perkSelectionPerks.length === 0" class="loadout">
+            <div class="loadout-inventory" [ngClass]="{'hide': loadoutPage !== 2}">
                 <div class="perk-slots">
                     <app-equip-perk-container [equippedPerk]="playerData.pet!.perks[0]"
                         (click)="selectPerk(playerData.pet!.perks[0])"></app-equip-perk-container>
@@ -36,15 +41,31 @@
                         </div>
                     </div>
                     <div class="perk-description-container">
-                        <div *ngIf="selectedPerk" class="perk-icon-wrapper" [ngClass]="{'common': selectedPerk.rarity === 'Common', 'rare':  selectedPerk.rarity === 'Rare', 'epic':  selectedPerk.rarity === 'Epic', 'legendary':  selectedPerk.rarity === 'Legendary'}">
+                        <div *ngIf="selectedPerk" class="perk-icon-wrapper"
+                            [ngClass]="{'common': selectedPerk.rarity === 'Common', 'rare':  selectedPerk.rarity === 'Rare', 'epic':  selectedPerk.rarity === 'Epic', 'legendary':  selectedPerk.rarity === 'Legendary'}">
                             <div class="perk-level-wrapper">
                                 <div *ngFor="let n of descriptionPerkLevels" class="perk-level"></div>
                             </div>
                             <img class="perk-icon" src="assets/PetRace/perk{{selectedPerk.id}}.png">
                         </div>
-                        <div *ngIf="selectedPerk" class="perk-description-wrapper" [innerHTML]="selectedPerk.description | petRacePerkDescription:selectedPerk.level">
+                        <div *ngIf="selectedPerk" class="perk-description-wrapper"
+                            [innerHTML]="selectedPerk.description | petRacePerkDescription:selectedPerk.level!">
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="summary-container-wrapper" [ngClass]="{'hide': loadoutPage !== 3}">
+                <div class="summary-container">
+                    <div class="turn">Turn: {{turnNo}}</div>
+                    <div class="pet-icon-wrapper">
+                        <img src="assets/PetRace/pet{{playerData.pet!.modelNo}}.png">
+                    </div>
+                    <div class="score">Score: <span class="value">{{playerData.score}}</span></div>
+                    <div class="subtitle">Base Stats</div>
+                    <div class="label-value">Movement Speed: <span class="value">{{playerData.pet!.movementSpeed | number}}m/s</span></div>
+                    <div class="label-value">Obstacle Dodge: <span class="value">{{playerData.pet!.dodge | number}}%</span></div>
+                    <div class="label-value">Base stamina regen: <span class="value"> {{playerData.pet!.regen | number}}/s</span></div>
+                    <div class="label-value">Base stamina depletion: <span class="value"> {{playerData.pet!.depletion | number}}/s</span></div>
                 </div>
             </div>
         </div>
@@ -52,18 +73,39 @@
             <div>Race in progress</div>
         </div>
     </div>
-    <div class="footer">
-        <div class="button-wrapper" *ngIf="state === 'Lobby'">
+    <div *ngIf="state === 'Lobby'" class="footer">
+        <div class="button-wrapper">
             <button *ngIf="!this.playerData.pet" [ngClass]="{'disabled': isSelectPetDisabled()}"
                 (click)="petClick()">Select</button>
         </div>
-        <div class="button-wrapper" *ngIf="state === 'Loadout'">
+    </div>
+    <div *ngIf="state === 'Loadout' && !this.playerData.isReady" class="footer">
+        <div class="button-wrapper" *ngIf="loadoutPage === 1">
+            <button (click)="freezePerk()" [ngClass]="{'disabled': !this.highlightedPerk}">Lock</button>
             <button *ngIf="playerData.perkSelectionPerks.length > 0" [ngClass]="{'disabled': isSelectPerkDisabled()}"
-                (click)="perkClick()">Select</button>
-            <button *ngIf="playerData.perkSelectionPerks.length === 0"
+                (click)="perkClick()">Buy</button>
+            <div class="nav-button next-button" (click)="navigateLoadout(1)">
+                <img src="assets/PetRace/arrow.svg">
+            </div>
+        </div>
+
+        <div class="button-wrapper" *ngIf="loadoutPage === 2">
+            <div class="nav-button prev-button" (click)="navigateLoadout(-1)">
+                <img src="assets/PetRace/arrow.svg">
+            </div>
+            <button
                 [ngClass]="{'disabled': isLoadoutButtonDisabled()}"
                 (click)="loadoutButtonClick()">{{setLoadoutButtonText()}}</button>
-            <button *ngIf="playerData.perkSelectionPerks.length === 0" (click)="setReady(true)"
+                <div class="nav-button next-button" (click)="navigateLoadout(1)">
+                    <img src="assets/PetRace/arrow.svg">
+                </div>
+        </div>
+
+        <div class="button-wrapper" *ngIf="loadoutPage === 3">
+            <div class="nav-button prev-button" (click)="navigateLoadout(-1)">
+                <img src="assets/PetRace/arrow.svg">
+            </div>
+            <button (click)="setReady(true)"
                 [ngClass]="{'disabled': playerData.isReady}">Ready</button>
         </div>
     </div>
